@@ -1,0 +1,45 @@
+{% extends "base_accounting.html" %}
+
+{% block title %}Login{% endblock title %}
+
+{% block content %}
+
+  {% if form.errors %}
+    <p>Неправильный логин или пароль, повторите пожалуйста попытку</p>
+  {% endif %}
+
+  {% if next %}
+    {% if user.is_authenticated %}
+      <p>Access denided.</p>
+    {% else %}
+      <p>Пожалуйста, авторизируйтесь чтобы получить доступ.</p>
+    {% endif %}
+  {% endif %}
+
+  <form class="row g-3 needs-validation" method="post" action="{% url 'login' %}">
+    {% csrf_token %}
+    <h1 class="h3 mb-3 fw-normal">Вход</h1>
+    <div class="form-floating">
+    <table>
+      <tr>
+        <td>{{ form.username.label_tag }}</td>
+        <td>{{ form.username }}</td>
+      </tr>
+    </div>
+    <div class="form-floating">
+      <tr class=".tr-bottom">
+        <td>{{ form.password.label_tag }}</td>
+        <td>{{ form.password }}</td>
+      </tr>
+    </div>
+    </table>
+    <div class="checkbox mb-3">
+    </div>
+    <input class="w-40 btn btn-lg btn-primary" type="submit" value="login">
+    <input type="hidden" name="next" value="{{ next }}">
+  </form><br>
+
+  {# Assumes you setup the password_reset view in your URLconf #}
+  <thead><th><a href="{% url 'password_reset' %}">Забыли пароль?</a>|</th><th><a href="/accounts/register">Создать аккаунт</a></th></thead>
+
+{% endblock %}

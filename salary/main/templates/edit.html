@@ -1,0 +1,88 @@
+{% extends 'content_base.html' %}
+
+{% block title %}Edit Salary{% endblock title %}
+{% block link_2 %}active{% endblock link_2 %}
+
+{% block content %}
+{% if perms.main.change_salary %}
+<div class="block">
+    <h2>{{ salary.account.first_name }} {{ salary.account.last_name }}</h2>
+    <h4>Зарплата сотрудника {{ salary.account.username }}  за {{salary.month}}.{{salary.year}} с ID {{salary.id}} равна {{ summ }}</h4>
+</div>
+<div  class="block">
+    <h4>Ставка равна: {% if perms.auth.change_user %}<a href="changerate">{{salary.account.rate}}</a>{% else %}{{salary.account.rate}}{% endif %}</h4><br>
+    <h4>Суммарная зп: {{summ}}</h4>
+    {% if salary.paid == True %}Выплачено{% endif %}
+</div>
+<div  class="block">
+    <h4>В базе указано: {% if summ != salary.summ %}<font color="red">{{salary.summ}}</font>{% else%}{{salary.summ}}{% endif %}</h4>
+    <form method="POST">
+        {% csrf_token %}
+        <input type="checkbox" name="bool">
+        <h6>Выплатить зарплату</h6>
+        <input class="btn btn-lg btn-primary" style="align: center" type="submit" value="Записать Зарплату">
+    </form>
+</div>
+<div class="block_2">
+    <nav class="navbar navbar-black sticky-top bg-white flex-md-nowrap p-0">
+        <h3>Штрафы</h3>
+        <ul class="navbar-nav px-3">
+          <li class="nav-item text-nowrap">
+            <a class="nav-link" href="add/sanction">Добавить</a>
+          </li>
+        </ul>
+      </nav>
+    <div class="list-group">
+    {% for sanction in sanctions %}
+          <a href="sanction/{{sanction.id}}" class="list-group-item list-group-item-action">Причина: {{sanction.sanction}} Дата:{{sanction.date}}
+            <a href="sanction/{{sanction.id}}/delete/">
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash" viewBox="0 0 16 16">
+                <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6z"/>
+                <path fill-rule="evenodd" d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118zM2.5 3V2h11v1h-11z"/>
+              </svg>
+            </a>
+          </a>
+          
+    {% endfor %}
+    </div>
+</div>
+<div class="block">
+    <h3>Всего штрафов:{{sanctions_len}}</h3>
+    <h4>На сумму: {{sanctions_summ}}</h4>
+</div>
+
+
+
+
+
+<div class="block_2">
+    <nav class="navbar navbar-black sticky-top bg-white flex-md-nowrap p-0">
+        <h3>Премии</h3>
+        <ul class="navbar-nav px-3">
+          <li class="nav-item text-nowrap">
+            <a class="nav-link" href="add/bonuse">Добавить</a>
+          </li>
+        </ul>
+      </nav>
+    <div class="list-group">
+    {% for bonuse in bonuses %}
+          <a href="bonuse/{{bonuse.id}}" class="list-group-item list-group-item-action">Причина: {{bonuse.reason}} Дата:{{bonuse.date}} Сумма: {{bonuse.summ}}
+            <a href="bonuse/{{bonuse.id}}/delete/">
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash" viewBox="0 0 16 16">
+                <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6z"/>
+                <path fill-rule="evenodd" d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118zM2.5 3V2h11v1h-11z"/>
+              </svg>
+            </a>
+          </a>
+    {% endfor %}
+    </div>
+</div>
+<div class="block">
+    <h3>Всего премий:{{bonuses_len}}</h3>
+    <h4>На сумму: {{bonuses_summ}}</h4>
+</div>
+
+{% else %}
+access denided
+{% endif %}
+{% endblock content %}

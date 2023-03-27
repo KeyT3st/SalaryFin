@@ -1,0 +1,30 @@
+{% extends 'content_base.html' %}
+
+{% block title %}Edit sanction{% endblock title %}
+{% block link_2 %}active{% endblock link_2 %}
+
+{% block content %}
+{% if perms.main.change_sanctions %}
+<div class="block_2-60">
+    <h4>Изменение штрафа {{ sanction }}</h4>
+    <form method="post">
+        {% csrf_token %}
+            <p>
+                <label>Текущая Дата: {{sanction.date}}</label><br>
+                <label>Изменение даты:</label><br>
+                <input type="date" name="date"/>
+            </p>
+            <p>
+                <label>Текущий штраф: {{ sanction.sanction }}</label><br>
+                <select name="sanct">
+                    {% for sanct in sanctions %}
+                    <option value="{{sanct.id}}">{{ sanct }}</option>
+                    {% endfor %}
+               </select>
+            </p>
+        <input type="submit" value="Submit">
+    </form>
+    <a href="delete" class="btn btn-danger">Удалить</a>
+</div>
+{% endif %}
+{% endblock content %}
