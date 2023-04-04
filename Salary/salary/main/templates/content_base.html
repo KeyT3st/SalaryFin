@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="ru">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>{% block title %}{% endblock title %}</title>
+    {% load django_bootstrap5 %}
+    {% bootstrap_css %}
+    {% bootstrap_javascript %}
+    <style>
+      .b-indent-vr {
+        flex-shrink: 0;
+        width: 1.5vw;
+        height: 100vh;
+      }
+      .b-indent-hz {
+        flex-shrink: 0;
+        width: 100vw;
+        height: 1.5vh;
+      }
+      .block {
+        float: left;
+        margin: 1vh 0px 1vh 1vw;
+        padding: 10px 10px 10px 10px;
+        border-radius: 5px;
+        min-height: 150px;
+        max-height: 31vh;
+        overflow: auto;
+        min-width: 50vh;
+        width: 31%;
+        background-color: white;
+      }
+      .block_2 {
+        float: left;
+        margin: 1vh 0px 1vh 1vw;
+        padding: 10px 10px 10px 10px;
+        min-height: 150px;
+        max-height: 31vh;
+        overflow: auto;
+        border-radius: 5px;
+        width: 63%;
+        background-color: white;
+      }
+      .block_3 {
+        float: left;
+        margin: 1vh 0px 1vh 1vw;
+        padding: 10px 10px 10px 10px;
+        min-height: 150px;
+        max-height: 31vh;
+        overflow: auto;
+        border-radius: 5px;
+        min-height: 150px;
+        width: 96%;
+        background-color: white;
+      }
+      main{
+        background-color:#EAEAEA;
+      }
+      .sticky {
+        position: sticky;
+        top: 0;
+        min-height: 2em;
+        background: lightpink;
+      }
+      .w-40 {
+        width: 40%!important;
+      }
+    </style>
+  <head>
+<body>
+  <main class="d-flex flex-nowrap">
+    <h1 class="visually-hidden">Sidebars examples</h1>
+  
+    <div class="d-flex flex-column flex-shrink-0 p-3 text-bg-dark b-indent-vr sticky" style="width: 280px;">
+      <a href="#" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto text-white text-decoration-none">
+        <svg class="bi pe-none me-2" width="40" height="32"><use xlink:href="#bootstrap"></use></svg>
+        <span class="fs-4">Зарплата</span>
+      </a>
+      <hr>
+      <ul class="nav nav-pills flex-column mb-auto">
+        <li class="nav-item">
+          <a href="/" class="nav-link {% block link_1 %}text-white{% endblock link_1 %}" aria-current="page">
+            Home
+          </a>
+        </li>
+        {% if perms.main.change_salary %}
+        <li>
+          <a href="/salary" class="nav-link {% block link_2 %}text-white{% endblock link_2 %}" aria-current="page">
+            Salary
+          </a>
+        </li>
+        {% endif %}
+      </ul>
+      <hr>
+      <div class="dropdown">
+        <a href="#" class="d-flex align-items-center text-white text-decoration-none dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+          <strong>{{ user.username }}</strong>
+        </a>
+        <ul class="dropdown-menu dropdown-menu-dark text-small shadow" style="">
+          <li><a class="dropdown-item" href="#">New project...</a></li>
+          <li><a class="dropdown-item" href="#">Settings</a></li>
+          <li><a class="dropdown-item" href="#">Profile</a></li>
+          <li><hr class="dropdown-divider"></li>
+          <li><a class="dropdown-item" href="/accounts/logout/">Выйти</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="">
+      {% block content %}
+      {% endblock content %}
+    </div>
+
+  </main>
+</body>
+</html>

@@ -1,0 +1,32 @@
+{% extends 'content_base.html' %}
+
+{% block title %}Edit bonuse{% endblock title %}
+{% block link_2 %}active{% endblock link_2 %}
+
+{% block content %}
+{% if perms.main.change_bonuse %}
+<div class="block_2-60">
+    <h4>Изменение бонуса {{ Bonuse }}</h4>
+    <form method="post">
+        {% csrf_token %}
+        <p>
+            <label>Текущая Дата: {{sanction.date}}</label><br>
+            <label>Изменение даты:</label><br>
+            <input type="date" name="date"/>
+        </p>
+            <p>
+                <label>Текущая причина: {{bonuse.reason}}</label><br>
+                <label>Изменение причины:</label><br>
+                <input type="text" name="reason"/>
+            </p>
+            <p>
+                <label>Текущая сумма: {{ bonuse.summ }}</label><br>
+                <label>Изменение суммы:</label><br>
+                <input type="number" name="summ"/>
+            </p>
+        <input type="submit" value="Submit">
+    </form>
+    <a href="delete" class="btn btn-danger">Удалить</a>
+</div>
+{% endif %}
+{% endblock content %}

@@ -1,0 +1,25 @@
+{% extends 'content_base.html' %}
+
+{% block title %}Add Bonuse{% endblock title %}
+{% block link_2 %}active{% endblock link_2 %}
+
+{% block content %}
+
+<form method="post">
+    {% csrf_token %}
+        <p>
+            <label>Введите причину:</label><br>
+            <input type="text" name="reason"/>
+        </p>
+        <p>
+            <label>Введите сумму:</label><br>
+            <input type="number" name="summ"/>
+        </p>
+        <p>
+            <label>Выберите дату:</label><br>
+            <input type="date" name="date" required pattern="dd/mm/yyyy"/>
+        </p>
+    <input type="submit" value="Submit">
+</form>
+
+{% endblock content %}

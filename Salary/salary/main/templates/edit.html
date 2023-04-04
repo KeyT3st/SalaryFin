@@ -1,0 +1,70 @@
+{% extends 'content_base.html' %}
+
+{% block title %}Edit Salary{% endblock title %}
+{% block link_2 %}active{% endblock link_2 %}
+
+{% block content %}
+{% if perms.main.change_salary %}
+<div class="block">
+    <h2>{{ salary.account.first_name }} {{ salary.account.last_name }}</h2>
+    <h4>Зарплата сотрудника {{ salary.account.username }}  за {{salary.month}}.{{salary.year}} с ID {{salary.id}} равна {{ summ }}</h4>
+</div>
+<div  class="block">
+    <h3>Ставка равна: {{salary.account.rate}}</h3><br>
+    <h3>Суммарная зп: {{summ}}</h3>
+</div>
+<div  class="block">
+    <h4>В базе указано: {{salary.summ}}</h4>
+    <form method="POST">
+        {% csrf_token %}
+        <input class="btn btn-lg btn-primary" style="align: center" type="submit" value="Записать Зарплату">
+    </form>
+</div>
+<div class="block_2">
+    <nav class="navbar navbar-black sticky-top bg-white flex-md-nowrap p-0">
+        <h3>Штрафы</h3>
+        <ul class="navbar-nav px-3">
+          <li class="nav-item text-nowrap">
+            <a class="nav-link" href="add/sanction">Добавить</a>
+          </li>
+        </ul>
+      </nav>
+    <div class="list-group">
+    {% for sanction in sanctions %}
+          <a href="sanction/{{sanction.id}}" class="list-group-item list-group-item-action">Причина: {{sanction.sanction}} Дата:{{sanction.date}}</a>
+    {% endfor %}
+    </div>
+</div>
+<div class="block">
+    <h3>Всего штрафов:{{sanctions_len}}</h3>
+    <h4>На сумму: {{sanctions_summ}}</h4>
+</div>
+
+
+
+
+
+<div class="block_2">
+    <nav class="navbar navbar-black sticky-top bg-white flex-md-nowrap p-0">
+        <h3>Премии</h3>
+        <ul class="navbar-nav px-3">
+          <li class="nav-item text-nowrap">
+            <a class="nav-link" href="add/bonuse">Добавить</a>
+          </li>
+        </ul>
+      </nav>
+    <div class="list-group">
+    {% for bonuse in bonuses %}
+          <a href="bonuse/{{bonuse.id}}" class="list-group-item list-group-item-action">Причина: {{bonuse.reason}} Дата:{{bonuse.date}} Сумма: {{bonuse.summ}}</a>
+    {% endfor %}
+    </div>
+</div>
+<div class="block">
+    <h3>Всего премий:{{bonuses_len}}</h3>
+    <h4>На сумму: {{bonuses_summ}}</h4>
+</div>
+
+{% else %}
+access denided
+{% endif %}
+{% endblock content %}

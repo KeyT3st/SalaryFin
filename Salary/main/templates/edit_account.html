@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="ru">
+  <head>
+    <meta charset="utf-8">
+    <title>Настройка профиля</title>
+    {% load django_bootstrap5 %}
+    {% bootstrap_css %}
+    {% bootstrap_javascript %}
+    <style>
+        body {
+            background: #EAEAEA }
+        section {
+            background: white;
+            color: black;
+            border-radius: 1em;
+            padding: 1em;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            margin-right: -50%;
+            transform: translate(-50%, -50%) }
+        .tt{
+            width: 100%;
+        }
+    </style>
+  </head>
+  <body>
+    <section>
+        <form method="POST">
+            {% csrf_token %}
+            <div class="tt">
+                <div style="float: left; display: inline-block;">
+                    <label>Имя:</label><br>
+                    <input type="text" name="first_name" placeholder="Введите имя" value="{{user.first_name}}">
+                </div>
+                <div style="margin-left: 15px; display: inline-block;">
+                    <label>Фамилия:</label><br>
+                    <input type="text" name="last_name" placeholder="Введите Фамилию" value="{{user.last_name}}">
+                </div>
+            </div>
+            <div clas="tt">
+                <div style="float: left; display: inline-block;">
+                    <label>Никнейм:</label><br>
+                    <input type="text" name="username" placeholder="Введите Никнейм" value="{{user.username}}">
+                </div>
+                <div style="margin-left: 15px; display: inline-block;">
+                    <label>Почта:</label><br>
+                    <input type="email" name="email" placeholder="Введите Почту" value="{{user.email}}">
+                </div>
+            </div>
+            <input type="submit" value="Сохранить" style="margin-top:15px">
+        </form>
+    </section>
+  </body>
+</html>
